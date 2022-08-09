@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tourism_app/Screens/home_screen.dart';
+import 'package:tourism_app/Screens/home_page.dart';
 
 void main() {
   runApp(const MyApp());
