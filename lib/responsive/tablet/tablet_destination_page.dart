@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tourism_app/Models/tourism_place.dart';
 import 'package:tourism_app/components/favorite_button.dart';
 
-class TabletDestinationPage extends StatefulWidget {
+class TabletDestinationPage extends StatelessWidget {
   final TourismPlace place;
   const TabletDestinationPage({
     Key? key,
@@ -11,23 +11,21 @@ class TabletDestinationPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<TabletDestinationPage> createState() => _TabletDestinationPageState();
-}
-
-class _TabletDestinationPageState extends State<TabletDestinationPage> {
-  final _scrollController = ScrollController();
-  bool isFavorite = false;
-
-  @override
-  void dispose() {
-    super.dispose();
-    _scrollController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final _scrollController = ScrollController();
+
     return Scaffold(
-      appBar: _appBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back_ios),
+          color: Colors.black,
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 25,
@@ -60,9 +58,9 @@ class _TabletDestinationPageState extends State<TabletDestinationPage> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Hero(
-                                tag: widget.place.heroTag,
+                                tag: place.heroTag,
                                 child: Image.asset(
-                                  widget.place.imageAsset,
+                                  place.imageAsset,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -75,7 +73,7 @@ class _TabletDestinationPageState extends State<TabletDestinationPage> {
                               child: ListView(
                                 controller: _scrollController,
                                 scrollDirection: Axis.horizontal,
-                                children: widget.place.imageUrls.map((assets) {
+                                children: place.imageUrls.map((assets) {
                                   return Padding(
                                     padding: const EdgeInsets.only(
                                       top: 15,
@@ -104,7 +102,7 @@ class _TabletDestinationPageState extends State<TabletDestinationPage> {
                               Container(
                                 padding: const EdgeInsets.only(bottom: 15),
                                 child: Text(
-                                  widget.place.name,
+                                  place.name,
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     fontSize: 35,
@@ -123,17 +121,17 @@ class _TabletDestinationPageState extends State<TabletDestinationPage> {
                                     children: [
                                       _icon(
                                         icon: Icons.calendar_today,
-                                        text: widget.place.openDays,
+                                        text: place.openDays,
                                       ),
                                       const SizedBox(height: 10),
                                       _icon(
                                         icon: Icons.access_time,
-                                        text: widget.place.openTime,
+                                        text: place.openTime,
                                       ),
                                       const SizedBox(height: 10),
                                       _icon(
                                         icon: Icons.monetization_on,
-                                        text: widget.place.ticketPrice,
+                                        text: place.ticketPrice,
                                       ),
                                     ],
                                   ),
@@ -143,7 +141,7 @@ class _TabletDestinationPageState extends State<TabletDestinationPage> {
                               Container(
                                 padding: const EdgeInsets.all(15),
                                 child: Text(
-                                  widget.place.description,
+                                  place.description,
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     fontSize: 15,
@@ -177,20 +175,6 @@ class _TabletDestinationPageState extends State<TabletDestinationPage> {
           ),
         ),
       ],
-    );
-  }
-
-  _appBar() {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      leading: IconButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        icon: const Icon(Icons.arrow_back_ios),
-        color: Colors.black,
-      ),
     );
   }
 }

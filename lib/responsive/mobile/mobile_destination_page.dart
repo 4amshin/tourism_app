@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
-
 import 'package:tourism_app/Models/tourism_place.dart';
 import 'package:tourism_app/components/booking_button.dart';
 import 'package:tourism_app/components/favorite_button.dart';
 
-class MobileDestinationPage extends StatefulWidget {
+class MobileDestinationPage extends StatelessWidget {
   final TourismPlace place;
   const MobileDestinationPage({
     Key? key,
     required this.place,
   }) : super(key: key);
 
-  @override
-  State<MobileDestinationPage> createState() => _MobileDestinationPageState();
-}
-
-class _MobileDestinationPageState extends State<MobileDestinationPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,8 +22,55 @@ class _MobileDestinationPageState extends State<MobileDestinationPage> {
                 padding: const EdgeInsets.all(18.0),
                 child: Stack(
                   children: [
-                    _mainImage(),
-                    _topIcon(),
+                    Container(
+                      height: MediaQuery.of(context).size.height / 2 + 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage(place.imageAsset),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 20,
+                            offset: const Offset(0, 10),
+                          )
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      top: 20,
+                      right: 10,
+                      left: 10,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Colors.white,
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          const CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              Icons.notifications,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     _favoriteIcon(),
                   ],
                 ),
@@ -41,7 +82,7 @@ class _MobileDestinationPageState extends State<MobileDestinationPage> {
                   children: [
                     const SizedBox(height: 10),
                     Text(
-                      widget.place.name,
+                      place.name,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontFamily: 'font2',
@@ -60,7 +101,7 @@ class _MobileDestinationPageState extends State<MobileDestinationPage> {
                     _moreImage(),
                     const SizedBox(height: 10),
                     Text(
-                      widget.place.description,
+                      place.description,
                       style: const TextStyle(
                         fontSize: 15,
                       ),
@@ -72,61 +113,6 @@ class _MobileDestinationPageState extends State<MobileDestinationPage> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  _mainImage() {
-    return Container(
-      height: MediaQuery.of(context).size.height / 2 + 50,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: AssetImage(widget.place.imageAsset),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.3),
-            spreadRadius: 1,
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          )
-        ],
-      ),
-    );
-  }
-
-  _topIcon() {
-    return Positioned(
-      top: 20,
-      right: 10,
-      left: 10,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.white,
-            child: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          const CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.white,
-            child: Icon(
-              Icons.notifications,
-              color: Colors.black,
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -195,7 +181,7 @@ class _MobileDestinationPageState extends State<MobileDestinationPage> {
                   ),
                 ),
                 Text(
-                  widget.place.openTime,
+                  place.openTime,
                   style: const TextStyle(
                     fontFamily: 'font2',
                     fontWeight: FontWeight.bold,
@@ -249,7 +235,7 @@ class _MobileDestinationPageState extends State<MobileDestinationPage> {
                   ),
                 ),
                 Text(
-                  widget.place.ticketPrice,
+                  place.ticketPrice,
                   style: const TextStyle(
                     fontFamily: 'font2',
                     fontWeight: FontWeight.bold,
@@ -268,7 +254,7 @@ class _MobileDestinationPageState extends State<MobileDestinationPage> {
       height: 80,
       child: ListView(
         scrollDirection: Axis.horizontal,
-        children: widget.place.imageUrls.map((assets) {
+        children: place.imageUrls.map((assets) {
           return Padding(
             padding: const EdgeInsets.only(top: 5, bottom: 5, right: 5),
             child: ClipRRect(

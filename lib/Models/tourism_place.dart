@@ -1,12 +1,12 @@
 class TourismPlace {
-  String name;
-  String location;
-  String description;
-  String openDays;
-  String openTime;
-  String ticketPrice;
-  String imageAsset;
-  String heroTag;
+  final String name;
+  final String location;
+  final String description;
+  final String openDays;
+  final String openTime;
+  final String ticketPrice;
+  final String imageAsset;
+  final String heroTag;
   List<String> imageUrls;
 
   TourismPlace({
